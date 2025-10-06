@@ -47,7 +47,7 @@ public class Main {
     private static Producto buscarProductoPorIndice() {
         Scanner in = new Scanner(System.in);
         int index;
-        System.out.println("Ingrese indice del producto");
+        System.out.print("Ingrese indice del producto: ");
         index = in.nextInt();
         if(index >= 0 && index < productos.size())
             return productos.get(index);
@@ -68,21 +68,27 @@ public class Main {
     
     private static boolean borrarProducto(Producto producto) {
         Scanner in = new Scanner(System.in);
+        String respuesta;
         System.out.println("Se va a eliminar el siguiente producto:");
         producto.mostrar();
-        System.out.print("Desea continuar? (s/n): ");
-        String respuesta = in.nextLine();
-        if (respuesta.equalsIgnoreCase("s")) {
-            productos.remove(producto);
-            System.out.println("Producto eliminado");
-            return true;
-        }
+        do {
+            System.out.print("Desea continuar? (s/n): ");
+            respuesta = in.nextLine();
+            if (respuesta.equalsIgnoreCase("s")) {
+                productos.remove(producto);
+                System.out.println("Producto eliminado");
+                return true;
+            } else if(!respuesta.equalsIgnoreCase("n")){
+                System.out.println("Opcion incorrecta");
+            }
+        } while(!respuesta.equalsIgnoreCase("n"));
         System.out.println("Se cancelo la eliminacion del producto");
         return false;
     }
     private static void ingresarPedido() {
         Scanner in = new Scanner(System.in);
         String respuesta;
+        boolean opcionValida;
         Pedido pedido = new Pedido();
         do {
             Producto producto = buscarProductoPorIndice();
@@ -99,10 +105,17 @@ public class Main {
             } else {
                 System.out.println("El producto no se encontro");
             }
-            System.out.print("Desea ingresar otro producto? (s/n): ");
-            respuesta = in.nextLine();
+            do {
+                opcionValida = true;
+                System.out.print("Desea ingresar otro producto? (s/n): ");
+                respuesta = in.nextLine();
+                if(!respuesta.equalsIgnoreCase("s") && !respuesta.equalsIgnoreCase("n")) {
+                    opcionValida = false;
+                    System.out.println("Opcion incorrecta");
+                }
+            } while(!opcionValida);
         } while(respuesta.equalsIgnoreCase("s"));
-        if(pedido.getLineasPedido().size() > 0) {
+        if(!pedido.getLineasPedido().isEmpty()) {
             System.out.println("\nSu pedido ha sido confirmado");
             pedidos.add(pedido);
         } else {
