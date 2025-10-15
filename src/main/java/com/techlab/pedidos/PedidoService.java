@@ -4,6 +4,7 @@
  */
 package com.techlab.pedidos;
 
+import com.techlab.excepciones.NonPositiveNumberException;
 import com.techlab.excepciones.StockInsuficienteException;
 import com.techlab.productos.Producto;
 import com.techlab.productos.ProductoService;
@@ -22,6 +23,11 @@ public class PedidoService {
     public PedidoService() {
         this.pedidos = new ArrayList<>();
     }
+    // Getter
+    public ArrayList<Pedido> getPedidos() {
+        return pedidos;
+    }
+    
     public void ingresarPedido(ProductoService productoService) {
         Scanner in = new Scanner(System.in);
         String respuesta;
@@ -35,7 +41,7 @@ public class PedidoService {
                 int cantidad = in.nextInt();
                 try {
                     pedido.agregarProducto(producto, cantidad);
-                } catch(StockInsuficienteException ex) {
+                } catch(StockInsuficienteException | NonPositiveNumberException ex) {
                     System.out.println(ex.getMessage());
                 }
                 in.nextLine();

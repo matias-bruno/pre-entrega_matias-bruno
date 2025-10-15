@@ -19,6 +19,11 @@ public class ProductoService {
     public ProductoService() {
         this.productos = new ArrayList<>();
     }
+    // Getter
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+    
     // Metodo para tener productos ingresados
     public void agregarProductos() {
         productos.add(new Producto("Cafe Morenita", 5000, 5));
@@ -35,13 +40,17 @@ public class ProductoService {
         int cantidadEnStock;
         System.out.print("Ingrese nombre producto: ");
         nombreProducto = in.nextLine();
-        nombreProducto = formatearNombre(nombreProducto);
+        nombreProducto = this.formatearNombre(nombreProducto);
         System.out.print("Ingrese precio: ");
         precioProducto = in.nextDouble();
         System.out.print("Ingrese cantidad en stock: ");
         cantidadEnStock = in.nextInt();
-        Producto producto = new Producto(nombreProducto, precioProducto, cantidadEnStock);
-        productos.add(producto);
+        if(productoValido(nombreProducto, precioProducto, cantidadEnStock)) {
+            Producto producto = new Producto(nombreProducto, precioProducto, cantidadEnStock);
+            productos.add(producto);
+        } else {
+            System.out.println("No se pudo ingresar el producto porque contenia datos no validos");
+        }
     }
     public Producto buscarProductoPorIndice() {
         Scanner in = new Scanner(System.in);
@@ -56,7 +65,7 @@ public class ProductoService {
         Scanner in = new Scanner(System.in);
         String nombre;
         System.out.println("Ingrese nombre del producto");
-        nombre = in.nextLine();
+        nombre = this.formatearNombre(in.nextLine());
         for(Producto producto : productos) {
             if(producto.getNombre().equalsIgnoreCase(nombre))
                 return producto;
@@ -93,7 +102,7 @@ public class ProductoService {
         }
     }
     // Metodo auxiliar para nombres de productos
-    private static String formatearNombre(String nombre) {
+    public String formatearNombre(String nombre) {
         String[] palabras = nombre.split(" ");
         StringBuilder sb = new StringBuilder();
         for(String palabra : palabras) {
@@ -103,5 +112,20 @@ public class ProductoService {
         }
         return sb.toString().trim();
     }
-    
+    public boolean productoValido(String nombre, double precio, int cantidad) {
+        boolean valido = true;
+        if(nombre.length() < 3) {
+            System.out.println("El nombre debe contener al menos 3 letras");
+            valido = false;
+        }
+        if(precio <= 0) {
+            System.out.println("El precio debe ser un numero positivo");
+            valido = false;
+        }
+        if(cantidad < 0) {
+            System.out.println("La cantidad no puede ser negativa");
+            valido = false;
+        }
+        return valido;
+    }
 }

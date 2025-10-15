@@ -4,6 +4,7 @@
  */
 package com.techlab.pedidos;
 
+import com.techlab.excepciones.NonPositiveNumberException;
 import com.techlab.excepciones.StockInsuficienteException;
 import java.util.ArrayList;
 import com.techlab.productos.Producto;
@@ -27,25 +28,29 @@ public class Pedido {
     }
     
     // Metodos para agregar y quitar
-    public void agregarProducto(Producto producto, int cantidad) throws StockInsuficienteException {
-        if(cantidad > producto.getStock())
+    public void agregarProducto(Producto producto, int cantidad) throws StockInsuficienteException, NonPositiveNumberException {
+        if(cantidad > producto.getStock()) {
             throw new StockInsuficienteException("El stock es insuficiente");
+        }
+        if(cantidad < 1) {
+            throw new NonPositiveNumberException("La cantidad debe ser mayor que cero");
+        }
         producto.descontarStock(cantidad);
         LineaPedido lineaPedido = new LineaPedido(producto, cantidad);
         lineasPedido.add(lineaPedido);
     }
+    // Este metodo hay que probarlo, porque como no se usa, no lo probe
 //    public boolean quitarProducto(Producto producto) {
-//        int pos = this.lineasPedido.indexOf(producto);
-//        if(pos != -1) {
-//            this.lineasPedido.remove(pos);
-//            return true;
+//        for(LineaPedido lineaPedido : lineasPedido) {
+//            if(lineaPedido.getProducto().getNombre().equals(producto.getNombre())) {
+//                lineasPedido.remove(lineaPedido);
+//            }
 //        }
 //        return false;
 //    }
     public void mostrar() {
-        System.out.println();
         for(LineaPedido lineaPedido : lineasPedido) {
-            System.out.println("Nombre: " + lineaPedido.getProducto().getNombre());
+            System.out.println("\nNombre: " + lineaPedido.getProducto().getNombre());
             System.out.println("Precio: " + lineaPedido.getProducto().getPrecio());
             System.out.println("Cantidad : " + lineaPedido.getCantidad() + "\n");
         }
