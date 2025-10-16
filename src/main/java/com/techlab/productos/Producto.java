@@ -10,24 +10,27 @@ package com.techlab.productos;
  */
 public class Producto {
     // Atributos privados
+    private int id;
     private String nombre;
     private double  precio;
     private int stock;
     
-    private static int cantidad;
+    private static int nextId = 1;
     
     // Constructor
     public Producto(String nombre, double precio, int stock) {
+        this.id = Producto.nextId++;
         this.nombre = nombre;
         this.precio = precio >= 0 ? precio : 0;
         this.stock = stock >= 0 ? stock : 0;
-        
-        Producto.cantidad++;
     }
     
     // Getters y setters
+    public int getId() {
+        return this.id;
+    }
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -35,7 +38,7 @@ public class Producto {
     }
 
     public double getPrecio() {
-        return precio;
+        return this.precio;
     }
 
     public void setPrecio(double precio) {
@@ -43,7 +46,7 @@ public class Producto {
     }
 
     public int getStock() {
-        return stock;
+        return this.stock;
     }
 
     public void setStock(int stock) {
@@ -56,13 +59,11 @@ public class Producto {
         if(cantidad <= this.stock)
             this.stock -= cantidad;
     }
-    public static int getCantidad() {
-        return Producto.cantidad;
-    }
     
     public void mostrar() {
-        System.out.println("\nNombre: " + this.nombre);
-        System.out.println("Precio: " + this.precio);
-        System.out.println("Cantidad en stock: " + this.stock + "\n");
+        System.out.println("\nProducto Id: " + this.id);
+        System.out.println("Nombre: " + this.nombre);
+        System.out.println("Precio: " + String.format("$%.2f",this.precio));
+        System.out.println("Cantidad en stock: " + this.stock);
     }
 }

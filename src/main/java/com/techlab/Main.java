@@ -46,7 +46,7 @@ public class Main {
                     productoService.mostrarProductos();
                     break;
                 case 3:
-                    producto = productoService.buscarProductoPorIndice();
+                    producto = productoService.buscarProductoPorId();
                     //producto = productoService.buscarProductoPorNombre();
                     if(producto == null) {
                         System.out.println("El indice no se encontro");
@@ -55,7 +55,7 @@ public class Main {
                     }
                     break;
                 case 4:
-                    producto = productoService.buscarProductoPorIndice();
+                    producto = productoService.buscarProductoPorId();
                     if(producto == null) {
                         System.out.println("El indice no se encontro");
                     } else {

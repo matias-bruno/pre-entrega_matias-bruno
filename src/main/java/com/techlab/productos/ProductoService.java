@@ -52,13 +52,15 @@ public class ProductoService {
             System.out.println("No se pudo ingresar el producto porque contenia datos no validos");
         }
     }
-    public Producto buscarProductoPorIndice() {
+    public Producto buscarProductoPorId() {
         Scanner in = new Scanner(System.in);
-        int index;
-        System.out.print("Ingrese indice del producto: ");
-        index = in.nextInt();
-        if(index >= 0 && index < productos.size())
-            return productos.get(index);
+        int id;
+        System.out.println("Ingrese id del producto");
+        id = in.nextInt();
+        for(Producto producto : productos) {
+            if(producto.getId() == id)
+                return producto;
+        }
         return null;
     }
     public Producto buscarProductoPorNombre() {
@@ -93,8 +95,8 @@ public class ProductoService {
     }
     public void mostrarProductos() {
         if(!productos.isEmpty()) {
+            System.out.println("\nLista de productos");
             for(int i = 0; i < productos.size(); ++i) {
-                System.out.println("Producto indice: " + i);
                 productos.get(i).mostrar();
             }
         } else {

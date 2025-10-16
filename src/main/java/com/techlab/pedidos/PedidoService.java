@@ -34,7 +34,7 @@ public class PedidoService {
         boolean opcionValida;
         Pedido pedido = new Pedido();
         do {
-            Producto producto = productoService.buscarProductoPorIndice();
+            Producto producto = productoService.buscarProductoPorId();
             if(producto != null) {
                 System.out.println("Producto: " + producto.getNombre());
                 System.out.print("Ingrese cantidad: ");
@@ -58,7 +58,7 @@ public class PedidoService {
                 }
             } while(!opcionValida);
         } while(respuesta.equalsIgnoreCase("s"));
-        if(!pedido.getLineasPedido().isEmpty()) {
+        if(pedido.getSize() > 0) {
             System.out.println("\nSu pedido ha sido confirmado");
             pedidos.add(pedido);
         } else {
@@ -67,8 +67,8 @@ public class PedidoService {
     }
     public void mostrarPedidos() {
         if(!pedidos.isEmpty()) {
+            System.out.println("\nLista de pedidos");
             for(int i = 0; i < pedidos.size(); ++i) {
-                System.out.println("Pedido indice: " + i);
                 pedidos.get(i).mostrar();
             }
         } else {

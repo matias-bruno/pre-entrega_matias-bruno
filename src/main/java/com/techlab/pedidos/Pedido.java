@@ -15,17 +15,17 @@ import com.techlab.productos.Producto;
  */
 public class Pedido {
     // Atributos privados
-    final private ArrayList<LineaPedido> lineasPedido;
+    private int id;
+    private final ArrayList<LineaPedido> lineasPedido;
+    
+    private static int nextId = 1;
     
     // Constructor
     public Pedido() {
-        lineasPedido = new ArrayList<>();
+        this.id = Pedido.nextId++;
+        this.lineasPedido = new ArrayList<>();
     }
     
-    // Getter
-    public ArrayList<LineaPedido> getLineasPedido() {
-        return lineasPedido;
-    }
     
     // Metodos para agregar y quitar
     public void agregarProducto(Producto producto, int cantidad) throws StockInsuficienteException, NonPositiveNumberException {
@@ -48,13 +48,18 @@ public class Pedido {
 //        }
 //        return false;
 //    }
+    public int getSize() {
+        return this.lineasPedido.size();
+    }
     public void mostrar() {
+        System.out.println("\nId de pedido: " + this.id);
         for(LineaPedido lineaPedido : lineasPedido) {
-            System.out.println("\nNombre: " + lineaPedido.getProducto().getNombre());
-            System.out.println("Precio: " + lineaPedido.getProducto().getPrecio());
-            System.out.println("Cantidad : " + lineaPedido.getCantidad() + "\n");
+            System.out.println("\nProducto Id: " + lineaPedido.getProducto().getId());
+            System.out.println("Nombre: " + lineaPedido.getProducto().getNombre());
+            System.out.println("Precio: " + String.format("$%.2f",lineaPedido.getProducto().getPrecio()));
+            System.out.println("Cantidad : " + lineaPedido.getCantidad());
         }
-        System.out.println("Total: " + this.calcularTotal() + "\n");
+        System.out.println("\nTotal: " + String.format("$%.2f",this.calcularTotal()));
     }
     public double calcularTotal() {
         double total = 0;
