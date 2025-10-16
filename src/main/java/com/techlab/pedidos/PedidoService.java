@@ -23,10 +23,6 @@ public class PedidoService {
     public PedidoService() {
         this.pedidos = new ArrayList<>();
     }
-    // Getter
-    public ArrayList<Pedido> getPedidos() {
-        return pedidos;
-    }
     
     public void ingresarPedido(ProductoService productoService) {
         Scanner in = new Scanner(System.in);

@@ -19,10 +19,6 @@ public class ProductoService {
     public ProductoService() {
         this.productos = new ArrayList<>();
     }
-    // Getter
-    public ArrayList<Producto> getProductos() {
-        return productos;
-    }
     
     // Metodo para tener productos ingresados
     public void agregarProductos() {
@@ -51,6 +47,30 @@ public class ProductoService {
         } else {
             System.out.println("No se pudo ingresar el producto porque contenia datos no validos");
         }
+    }
+    public boolean actualizarProducto(Producto producto) {
+        Scanner in = new Scanner(System.in);
+        String nombreProducto;
+        double precioProducto;
+        int cantidadEnStock;
+        System.out.println("Se va a actualizar el siguiente producto:");
+        producto.mostrar();
+        System.out.print("Ingrese nombre producto: ");
+        nombreProducto = in.nextLine();
+        nombreProducto = this.formatearNombre(nombreProducto);
+        System.out.print("Ingrese precio: ");
+        precioProducto = in.nextDouble();
+        System.out.print("Ingrese cantidad en stock: ");
+        cantidadEnStock = in.nextInt();
+        if(productoValido(nombreProducto, precioProducto, cantidadEnStock)) {
+            producto.setNombre(nombreProducto);
+            producto.setPrecio(precioProducto);
+            producto.setStock(cantidadEnStock);
+            return true;
+        } else {
+            System.out.println("No se pudo actualizar el producto porque contenia datos no validos");
+        }
+        return false;
     }
     public Producto buscarProductoPorId() {
         Scanner in = new Scanner(System.in);

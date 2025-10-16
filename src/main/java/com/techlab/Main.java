@@ -25,8 +25,8 @@ public class Main {
         do {
             System.out.println("\n1. Ingresar producto");
             System.out.println("2. Listar productos");
-            System.out.println("3. Buscar producto por indice");
-            System.out.println("4. Eliminar producto por indice");
+            System.out.println("3. Actualizar producto por id");
+            System.out.println("4. Eliminar producto por id");
             System.out.println("5. Crear pedido");
             System.out.println("6. Listar pedidos");
             System.out.println("0. Salir");
@@ -51,7 +51,7 @@ public class Main {
                     if(producto == null) {
                         System.out.println("El indice no se encontro");
                     } else {
-                        producto.mostrar();
+                        productoService.actualizarProducto(producto);
                     }
                     break;
                 case 4:
